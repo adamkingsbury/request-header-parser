@@ -1,0 +1,133 @@
+doctype html
+html
+  head
+    title ??User Agent??
+    script(defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js" )
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+  body
+    section
+      .column
+      .container
+      section.hero.is-info.is-bold
+        .hero-body
+          .container
+            h1.title User Agent Microservice
+            p.subtitle Because we can
+    section
+      .container
+        .tabs
+          ul
+            li.is-active.complicated-tab
+              a Complicated
+            li.better-tab
+              a Better
+  
+  
+    section.complicated
+      .container
+        article.message.is-danger
+          .message-header
+            p Looking up user-agent details is complicated and ugly
+          .message-body
+            p The User Agent microservice will help take the pain away...
+            p 
+              b No more of this:
+            .notification.is-white
+              #{JSON.stringify(originalHeaders)}
+    
+    section.better.is-hidden
+      .container
+        article.message.is-primary
+          .message-header
+            p Clean, concise and ready for your web app
+          .message-body
+            p The User Agent microservice does all of the heavy lifting for you 
+              |and parses out the most important information ready for consumption.
+            p Data is parsed and cleanly packaged up into a fresh new JSON object ready for your
+              |web client to act on. Just send a 
+              b GET
+              |request to:
+            p.text-center 
+              em 
+                a(href="https://material-wasp.glitch.me/json") https://material-wasp.glitch.me/json
+            p And recieve a well formatted response as below:
+            .notification.is-white
+              p {
+              p(style='padding-left:2em;') ip: "#{ip}",
+              p(style='padding-left:2em;') operatingSystem: "#{operatingSystem}",
+              p(style='padding-left:2em;') device: "#{device}",
+              p(style='padding-left:2em;') browser: "#{browser}",
+              p(style='padding-left:2em;') language: "#{language}"
+              p }      
+            
+          
+    section
+      .container
+        .notification.is-info.is-bold
+          nav.pagination.is-rounded(role="navigation" aria-label="pagination")
+            a.pagination-previous Previous
+            a.pagination-next Next
+            ul.pagination-list
+              li
+                a.pagination-link.complicated-link.is-current(aria-label="This is ugly") 1
+              li
+                a.pagination-link.better-link( aria-label="Ahh, much better") 2
+    
+    
+    script.
+      $(document).ready(function() {
+      
+        //Variable to track view state
+        var page = 0;
+        var betterSection = $(".better");
+        var betterTab = $(".better-tab");
+        var betterLink = $(".better-link");
+        var complicatedSection = $(".complicated");
+        var complicatedTab = $(".complicated-tab");
+        var complicatedLink = $(".complicated-link");
+        
+        $(".pagination-previous").on("click", function previousClick() {
+          page = (2 + page - 1) % 2;
+          switch (page){
+            case 0: gotoComplicated(); break;
+            case 1: gotoBetter(); break;
+          }
+        });
+        
+        $(".pagination-next").on("click", function nextClick() {
+          page = (page + 1) % 2;
+          switch (page){
+            case 0: gotoComplicated(); break;
+            case 1: gotoBetter(); break;
+          }
+        });
+        
+        $(".complicated-link").on("click", gotoComplicated);
+        
+        $(".better-link").on("click", gotoBetter);
+        
+        $(".complicated-tab").on("click", gotoComplicated);
+        
+        $(".better-tab").on("click", gotoBetter);
+        
+        function gotoComplicated() {
+          betterLink.removeClass("is-current");
+          betterTab.removeClass("is-active");
+          betterSection.addClass("is-hidden");
+          complicatedLink.addClass("is-current");
+          complicatedTab.addClass("is-active");
+          complicatedSection.removeClass("is-hidden");
+        }
+        
+        function gotoBetter() {
+          betterLink.addClass("is-current");
+          betterTab.addClass("is-active");
+          betterSection.removeClass("is-hidden");
+          complicatedLink.removeClass("is-current");
+          complicatedTab.removeClass("is-active");
+          complicatedSection.addClass("is-hidden");
+        }
+      });
+      
