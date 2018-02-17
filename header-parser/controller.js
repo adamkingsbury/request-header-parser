@@ -18,7 +18,7 @@ var headerParser = function(req, res, next){
     device: ar.device.toVersion(),
     browser: ar.toString(),
     language: req.headers['accept-language'],
-    originalHeaders: req.headers
+//    originalHeaders: req.headers
   };
   
   //inject data onto the req object

@@ -37,18 +37,21 @@ html
             .notification.is-white
               #{JSON.stringify(originalHeaders)}
     
-    section.better
+    section.better.is-hidden
       .container
-        article.message.is-warning
+        article.message.is-primary
           .message-header
             p Clean, concise and ready for your web app
           .message-body
             p The User Agent microservice does all of the heavy lifting for you 
               |and parses out the most important information ready for consumption.
             p Data is parsed and cleanly packaged up into a fresh new JSON object ready for your
-              |web client to act on. Just send a get request to:
+              |web client to act on. Just send a 
+              b GET
+              |request to:
             p.text-center 
-              em https://material-wasp.glitch.me/json
+              em 
+                a(href="https://material-wasp.glitch.me/json") https://material-wasp.glitch.me/json
             p And recieve a well formatted response as below:
             .notification.is-white
               p {
@@ -78,6 +81,12 @@ html
       
         //Variable to track view state
         var page = 0;
+        var betterSection = $(".better");
+        var betterTab = $(".better-tab");
+        var betterLink = $(".better-link");
+        var complicatedSection = $(".complicated");
+        var complicatedTab = $(".complicated-tab");
+        var complicatedLink = $(".complicated-link");
         
         $(".pagination-previous").on("click", function previousClick() {
           page = (2 + page - 1) % 2;
@@ -104,10 +113,21 @@ html
         $(".better-tab").on("click", gotoBetter);
         
         function gotoComplicated() {
-          alert("1 button");
+          betterLink.removeClass("is-current");
+          betterTab.removeClass("is-active");
+          betterSection.addClass("is-hidden");
+          complicatedLink.addClass("is-current");
+          complicatedTab.addClass("is-active");
+          complicatedSection.removeClass("is-hidden");
         }
         
         function gotoBetter() {
-          alert("2 button");
+          betterLink.addClass("is-current");
+          betterTab.addClass("is-active");
+          betterSection.removeClass("is-hidden");
+          complicatedLink.removeClass("is-current");
+          complicatedTab.removeClass("is-active");
+          complicatedSection.addClass("is-hidden");
         }
       });
+      
